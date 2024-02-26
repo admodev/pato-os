@@ -21,6 +21,7 @@ typedef struct
 typedef enum
 {
   CMD_EXIT,
+  CMD_EMPTY,
   CMD_CLEARSC,
   CMD_TPROCS,
   CMD_CREATEPROC,
@@ -32,7 +33,11 @@ Command get_command(const char *input)
   if (strcmp(input, "exit") == 0)
   {
     return CMD_EXIT;
-  } 
+  }
+  else if (strcmp(input, "") == 0)
+  {
+    return CMD_EMPTY;
+  }
   else if (strcmp(input, "clearsc") == 0)
   {
     return CMD_CLEARSC;
@@ -116,6 +121,8 @@ int main(int argc, char* argv[])
       case CMD_EXIT:
         close_input_buffer(input_buffer);
         exit(EXIT_SUCCESS);
+        break;
+      case CMD_EMPTY:
         break;
       case CMD_CLEARSC:
         clear_screen();
