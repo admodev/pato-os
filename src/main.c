@@ -8,13 +8,50 @@
 // Project libs
 #include "../include/ansilib.h"
 #include "../include/tableslib.h"
+#include "../include/processmanagementlib.h"
 
+// Type definitions
 typedef struct
 {
   char* buffer;
   size_t buffer_length;
   ssize_t input_length;
 } InputBuffer;
+
+typedef enum
+{
+  CMD_EXIT,
+  CMD_CLEARSC,
+  CMD_TPROCS,
+  CMD_CREATEPROC,
+  CMD_UNKNOWN
+} Command;
+
+Command get_command(const char *input)
+{
+  if (strcmp(input, "exit") == 0)
+  {
+    return CMD_EXIT;
+  } 
+  else if (strcmp(input, "clearsc") == 0)
+  {
+    return CMD_CLEARSC;
+  }
+  else if (strcmp(input, "tprocs") == 0)
+  {
+    return CMD_TPROCS;
+  }
+  else if (strcmp(input, "createproc") == 0)
+  {
+    return CMD_CREATEPROC;
+  }
+  else
+  {
+    return CMD_UNKNOWN;
+  }
+}
+
+// End of type definitions
 
 InputBuffer* new_input_buffer()
 {
@@ -26,6 +63,7 @@ InputBuffer* new_input_buffer()
   return input_buffer;
 }
 
+// DON'T TOUCH IDENTATION OF THIS PRINT STATEMENTS...
 void print_sys_name()
 {
   printf(" _ __   __ _| |_ ___   ___  ___ \n");
@@ -73,22 +111,24 @@ int main(int argc, char* argv[])
     print_prompt();
     read_input(input_buffer);
 
-    if (strcmp(input_buffer->buffer, "exit") == 0)
+    switch (get_command(input_buffer->buffer))
     {
-      close_input_buffer(input_buffer);
-      exit(EXIT_SUCCESS);
-    }
-    else if(strcmp(input_buffer->buffer, "clearsc") == 0)
-    {
-      clear_screen();
-    }
-    else if (strcmp(input_buffer->buffer, "tprocs") == 0)
-    {
-      print_table();
-    }
-    else
-    {
-      printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+      case CMD_EXIT:
+        close_input_buffer(input_buffer);
+        exit(EXIT_SUCCESS);
+        break;
+      case CMD_CLEARSC:
+        clear_screen();
+        break;
+      case CMD_TPROCS:
+        print_table();
+        break;
+      case CMD_CREATEPROC:
+        schedule_process();
+        break;
+      default:
+        printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+        break;
     }
   }
 }

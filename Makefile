@@ -1,13 +1,13 @@
-exec: clean compile bin/patoos src/main.o src/ansilib.o src/tableslib.o run
+exec: clean compile bin/patoos src/main.o src/ansilib.o src/tableslib.o src/processmanagementlib.o run
 
 compile:
 	echo "Starting compilation..."
 
-bin/patoos: src/main.o src/ansilib.o src/tableslib.o
+bin/patoos: src/main.o src/ansilib.o src/tableslib.o src/processmanagementlib.o
 	echo "Linking"
 	gcc -o bin/patoos $^
 
-src/main.o: src/main.c include/ansilib.h include/tableslib.h include/colorslib.h
+src/main.o: src/main.c include/ansilib.h include/tableslib.h include/colorslib.h include/processmanagementlib.h
 	echo "Compiling main.c"
 	gcc -c src/main.c -o src/main.o -I./include -I./src
 
@@ -22,6 +22,10 @@ src/tableslib.o: src/tableslib.c include/tableslib.h
 src/colorslib.o: include/colorslib.h
 	echo "Compiling colorslib.h"
 	gcc -c -I./include
+
+src/processmanagementlib.o: src/processmanagementlib.c include/processmanagementlib.h
+	echo "Compiling processmanagementlib.c"
+	gcc -c src/processmanagementlib.c -o src/processmanagementlib.o -I./include -I./src
 
 clean:
 	test -e "bin/patoos" && rm bin/patoos || echo "The main file does not exist. Skipping clean..."
