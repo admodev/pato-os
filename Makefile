@@ -7,7 +7,7 @@ bin/patoos: src/main.o src/ansilib.o src/tableslib.o
 	echo "Linking"
 	gcc -o bin/patoos $^
 
-src/main.o: src/main.c include/ansilib.h include/tableslib.h
+src/main.o: src/main.c include/ansilib.h include/tableslib.h include/colorslib.h
 	echo "Compiling main.c"
 	gcc -c src/main.c -o src/main.o -I./include -I./src
 
@@ -18,6 +18,10 @@ src/ansilib.o: src/ansilib.c include/ansilib.h
 src/tableslib.o: src/tableslib.c include/tableslib.h
 	echo "Compiling tableslib.c"
 	gcc -c src/tableslib.c -o src/tableslib.o -I./include -I./src
+
+src/colorslib.o: include/colorslib.h
+	echo "Compiling colorslib.h"
+	gcc -c -I./include
 
 clean:
 	test -e "bin/patoos" && rm bin/patoos || echo "The main file does not exist. Skipping clean..."
