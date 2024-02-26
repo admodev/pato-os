@@ -25,6 +25,15 @@ InputBuffer* new_input_buffer()
   return input_buffer;
 }
 
+void print_sys_name()
+{
+  printf(" _ __   __ _| |_ ___   ___  ___ \n");
+  printf("| '_ \\ / _` | __/ _ \\ / _ \\/ __|\n");
+  printf("| |_) | (_| | || (_) | (_) \\__ \\\n");
+  printf("| .__/ \\__,_|\\__\\___/ \\___/|___/\n");
+  printf("|_|\n");
+}
+
 void print_prompt()
 {
   printf("> ");
@@ -58,6 +67,7 @@ int main(int argc, char* argv[])
   InputBuffer* input_buffer = new_input_buffer();
   while (true)
   {
+    print_sys_name();
     print_prompt();
     read_input(input_buffer);
 
