@@ -7,6 +7,7 @@
 
 // Project libs
 #include "../include/ansilib.h"
+#include "../include/tableslib.h"
 
 typedef struct
 {
@@ -65,9 +66,10 @@ void close_input_buffer(InputBuffer* input_buffer)
 int main(int argc, char* argv[])
 {
   InputBuffer* input_buffer = new_input_buffer();
+
+  print_sys_name();
   while (true)
   {
-    print_sys_name();
     print_prompt();
     read_input(input_buffer);
 
@@ -79,6 +81,10 @@ int main(int argc, char* argv[])
     else if(strcmp(input_buffer->buffer, "clearsc") == 0)
     {
       clear_screen();
+    }
+    else if (strcmp(input_buffer->buffer, "tprocs") == 0)
+    {
+      print_table();
     }
     else
     {
