@@ -25,6 +25,7 @@ typedef enum
   CMD_CLEARSC,
   CMD_TPROCS,
   CMD_CREATEPROC,
+  CMD_CPUINFO,
   CMD_UNKNOWN
 } Command;
 
@@ -49,6 +50,10 @@ Command get_command(const char *input)
   else if (strcmp(input, "createproc") == 0)
   {
     return CMD_CREATEPROC;
+  }
+  else if(strcmp(input, "cpuinfo") == 0)
+  {
+    return CMD_CPUINFO;
   }
   else
   {
@@ -132,6 +137,9 @@ int main(int argc, char* argv[])
         break;
       case CMD_CREATEPROC:
         schedule_process();
+        break;
+      case CMD_CPUINFO:
+        cpuinfo_table();
         break;
       default:
         printf("Unrecognized command '%s'.\n", input_buffer->buffer);
