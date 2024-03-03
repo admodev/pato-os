@@ -22,6 +22,7 @@ typedef enum
 {
   CMD_EXIT,
   CMD_EMPTY,
+  CMD_HELP,
   CMD_CLEARSC,
   CMD_TPROCS,
   CMD_CREATEPROC,
@@ -38,6 +39,10 @@ Command get_command(const char *input)
   else if (strcmp(input, "") == 0)
   {
     return CMD_EMPTY;
+  }
+  else if (strcmp(input, "helpme") == 0)
+  {
+    return CMD_HELP;
   }
   else if (strcmp(input, "clearsc") == 0)
   {
@@ -71,6 +76,11 @@ InputBuffer* new_input_buffer()
   input_buffer->input_length = 0;
 
   return input_buffer;
+}
+
+void print_help_message()
+{
+  printf("Available commands are: exit, clearsc, tprocs, createproc, cpuinfo.\n");
 }
 
 // DON'T TOUCH IDENTATION OF THIS PRINT STATEMENTS...
@@ -129,6 +139,9 @@ int main(int argc, char* argv[])
         break;
       case CMD_EMPTY:
         break;
+      case CMD_HELP:
+        print_help_message();
+        break;
       case CMD_CLEARSC:
         clear_screen();
         break;
@@ -142,7 +155,7 @@ int main(int argc, char* argv[])
         cpuinfo_table();
         break;
       default:
-        printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+        printf("Unrecognized command '%s'. To get help on how to use this system use: helpme\n", input_buffer->buffer);
         break;
     }
   }
